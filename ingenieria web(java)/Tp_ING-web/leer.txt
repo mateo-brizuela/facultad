@@ -1,5 +1,0 @@
-hola profe
-
-le dejo este archivo comprimido en formato zip
-
-simplemente hay que descomprimirlo e importarlo a apache netbeans!!
