@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <cmath>
-#define n 3
+#define n 6
 
 void cargar(double matriz[n][n], double vector[n]);
 void leer(double matriz[n][n], double vector[n]);
@@ -84,7 +84,7 @@ void relajacion(double matriz[n][n],double vector[n]){
     double errorV = 1000.0; // este es el error viejo
     double error = 0.0; // error nuevo
     double tolerancia = 0.0;
-    double omega = 1.2; // es el coeficiente de relajacion que va a ser propuesto en el ejercicio
+    double omega = 1.1; // es el coeficiente de relajacion que va a ser propuesto en el ejercicio
     int cifrasTolerancia = 0;
     int opcion = 0;
     int iter = 0; // cuenta la cantidad de iteraciones 

@@ -85,15 +85,11 @@ int main(int argc, char const *argv[])
         printf("cantidad de iteraciones: %d\n",i);
 
     }
-    
-    
-    
-
     return 0;
 }
 
 
 double calcularFuncion(double x){
-    double fx = -2 +(7*x)-(5*pow(x,2))+(6*pow(x,3));
+    double fx = pow(x,3) -x -2; 
     return fx;
 }

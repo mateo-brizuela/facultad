@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#define n 3  // cantidad de puntos (hay n elementos: índices 0..n-1)
+#define n 4  // cantidad de puntos (hay n elementos: índices 0..n-1)
 
 void cargarVector(double x[n], double y[n]);
 void leerVector(double x[n], double y[n]);

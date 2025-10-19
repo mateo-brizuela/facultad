@@ -41,9 +41,9 @@ void cargarVector(double x[n], double y[n]){
 
     for (int i = 0; i < n; i++)
     {
-        printf("ingrese x%d: ",i);
+        printf("ingrese x[%d]: ",i);
         scanf("%lf",&x[i]);
-        printf("ingrese y%d: ",i);
+        printf("ingrese y[%d]: ",i);
         scanf("%lf",&y[i]);
     }
     printf("vector ingresado: \n");

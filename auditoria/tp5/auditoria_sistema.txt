@@ -1,0 +1,114 @@
+AUDITORÍA DEL EQUIPO - TP5 IUA
+Fecha: dom 05 oct 2025 20:24:34 -03
+--------------------------------------------
+
+1. LICENCIAS DE SOFTWARE
+
+Estado=No/Inst/ficheros-Conf/desempaqUetado/medio-conF/medio-inst(H)/espera-disparo(W)/pendienTe-disparo
+Err?=(ninguno)/requiere-Reinst
+Nombre
+
+accountsservice
+acl
+adduser
+adwaita-icon-theme
+alsa-base
+alsa-topology-conf
+alsa-ucm-conf
+alsa-utils
+amd64-microcode
+anacron
+apache2
+apache2-bin
+apache2-data
+apache2-utils
+apg
+
+(Ejemplo: Chrome, VSCode, Zoom son propietarios)
+
+2. PROTECCIÓN ANTI-MALWARE
+ClamAV no instalado. Instalar con: sudo apt install clamav
+
+3. FIREWALL (UFW)
+Estado: inactivo
+
+4. SOFTWARE SOSPECHOSO INSTALADO
+ii  cracklib-runtime                                 2.9.6-5.1build2                           amd64        runtime support for password checker library cracklib2
+ii  libcrack2:amd64                                  2.9.6-5.1build2                           amd64        pro-active password checker library
+ii  transmission-common                              4.0.5-1build5                             amd64        lightweight BitTorrent client (common files)
+ii  transmission-gtk                                 4.0.5-1build5                             amd64        lightweight BitTorrent client (GTK+ interface)
+
+5. USUARIOS DEL SISTEMA Y GRUPOS
+
+Usuarios:
+root
+daemon
+bin
+sys
+sync
+games
+man
+lp
+mail
+news
+uucp
+proxy
+www-data
+backup
+list
+
+Grupos:
+root
+daemon
+bin
+sys
+adm
+tty
+disk
+lp
+mail
+news
+uucp
+man
+proxy
+kmem
+dialout
+
+6. LOGS DE EVENTOS (últimos errores críticos)
+jul 02 11:04:32 mateo-brizuela-ThinkPad-X13-Gen-1 systemd-udevd[387]: /etc/udev/rules.d/60-brother-libsane-type1-inst.rules:14 Invalid key 'SYSFS'.
+jul 02 11:04:32 mateo-brizuela-ThinkPad-X13-Gen-1 kernel: ACPI Error: Needed [Integer/String/Buffer], found [Package] 0000000083959ff1 (20240827/exresop-469)
+jul 02 11:04:32 mateo-brizuela-ThinkPad-X13-Gen-1 kernel: ACPI Error: AE_AML_OPERAND_TYPE, While resolving operands for [ToHexString] (20240827/dswexec-433)
+jul 02 11:04:32 mateo-brizuela-ThinkPad-X13-Gen-1 kernel: ACPI Error: Aborting method \ADBG due to previous error (AE_AML_OPERAND_TYPE) (20240827/psparse-529)
+jul 02 11:04:32 mateo-brizuela-ThinkPad-X13-Gen-1 kernel: ACPI Error: Aborting method \_SB.HIDD._DSM due to previous error (AE_AML_OPERAND_TYPE) (20240827/psparse-529)
+oct 03 16:22:06 mateo-brizuela-ThinkPad-X13-Gen-1 systemd[1]: Timed out waiting for device dev-disk-by\x2duuid-7b9967f6\x2dd841\x2d4bbc\x2d9b67\x2d32b9c2904ac9.device - /dev/disk/by-uuid/7b9967f6-d841-4bbc-9b67-32b9c2904ac9.
+░░ Subject: A start job for unit dev-disk-by\x2duuid-7b9967f6\x2dd841\x2d4bbc\x2d9b67\x2d32b9c2904ac9.device has failed
+░░ Defined-By: systemd
+░░ Support: http://www.ubuntu.com/support
+░░ 
+░░ A start job for unit dev-disk-by\x2duuid-7b9967f6\x2dd841\x2d4bbc\x2d9b67\x2d32b9c2904ac9.device has finished with a failure.
+░░ 
+░░ The job identifier is 32 and the job result is timeout.
+oct 03 16:22:07 mateo-brizuela-ThinkPad-X13-Gen-1 bluetoothd[1092]: profiles/sap/server.c:sap_server_register() Sap driver initialization failed.
+oct 03 16:22:07 mateo-brizuela-ThinkPad-X13-Gen-1 bluetoothd[1092]: sap-server: Operation not permitted (1)
+oct 03 16:22:07 mateo-brizuela-ThinkPad-X13-Gen-1 systemd-udevd[387]: /etc/udev/rules.d/60-brother-libsane-type1-inst.rules:14 Invalid key 'SYSFS'.
+oct 03 16:22:11 mateo-brizuela-ThinkPad-X13-Gen-1 systemd-udevd[387]: /etc/udev/rules.d/60-brother-libsane-type1-inst.rules:14 Invalid key 'SYSFS'.
+oct 05 19:49:13 mateo-brizuela-ThinkPad-X13-Gen-1 systemd[1533]: Failed to start snap.firmware-updater.firmware-notifier.service - Service for snap application firmware-updater.firmware-notifier.
+░░ Subject: A start job for unit UNIT has failed
+░░ Defined-By: systemd
+░░ Support: http://www.ubuntu.com/support
+░░ 
+░░ A start job for unit UNIT has finished with a failure.
+░░ 
+░░ The job identifier is 254 and the job result is failed.
+oct 05 19:49:50 mateo-brizuela-ThinkPad-X13-Gen-1 gdm-password][2765]: gkr-pam: unable to locate daemon control file
+oct 05 19:49:50 mateo-brizuela-ThinkPad-X13-Gen-1 gdm3[1467]: Gdm: on_display_added: assertion 'GDM_IS_REMOTE_DISPLAY (display)' failed
+oct 05 19:49:51 mateo-brizuela-ThinkPad-X13-Gen-1 systemd[2788]: Failed to start app-gnome-gnome\x2dkeyring\x2dpkcs11-3035.scope - Application launched by gnome-session-binary.
+░░ Subject: A start job for unit UNIT has failed
+░░ Defined-By: systemd
+
+7. SUPUESTOS Y OBSERVACIONES
+Equipo personal sin software corporativo. Antivirus ClamAV considerado suficiente.
+No se auditan licencias de drivers propietarios ni firmware.
+
+--------------------------------------------
+FIN DE AUDITORÍA

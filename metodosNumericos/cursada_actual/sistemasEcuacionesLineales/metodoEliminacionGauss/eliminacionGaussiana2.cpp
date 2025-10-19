@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#define n 3
+#define n 8
 
 /*
     documentacion del programa:

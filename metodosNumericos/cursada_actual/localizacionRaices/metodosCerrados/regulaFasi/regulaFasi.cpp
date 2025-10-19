@@ -24,14 +24,15 @@ int main() {
            "Seleccione una opcion: \n"
            "  1) Ingresar los valores por terminal\n"
            "  2) Usar valores por defecto del codigo\n");
-    if (scanf("%d", &opcion) != 1) { printf("Entrada invalida.\n"); return 1; }
+    // Permite alternar entre entradas manuales y un caso de ejemplo
+    scanf("%d", &opcion);
     manual = (opcion == 1);
 
     if (manual) {
         printf("Ingrese el valor de a: ");
-        if (scanf("%lf", &a) != 1) { printf("Entrada invalida.\n"); return 1; }
+        scanf("%lf", &a);
         printf("Ingrese el valor de b: ");
-        if (scanf("%lf", &b) != 1) { printf("Entrada invalida.\n"); return 1; }
+        scanf("%lf", &b);
     } else {
         // Defaults de ejemplo (ajustalos a tu problema)
         a = 0.0;
@@ -48,14 +49,18 @@ int main() {
 
     // Raiz exacta en extremos
     if (fa == 0.0) { 
-        printf("Raiz exacta en a: %.10f\n", a);
-        printf("Intervalo final: [%.10f, %.10f]\n", a, b);
+        printf("Raiz exacta en a (decimal): %.10f\n", a);
+        printf("Raiz exacta en a (cientifica): %.10e\n", a);
+        printf("Intervalo final (decimal): [%.10f, %.10f]\n", a, b);
+        printf("Intervalo final (cientifica): [%.10e, %.10e]\n", a, b);
         printf("Iteraciones: %d\n", i);
         return 0; 
     }
     if (fb == 0.0) { 
-        printf("Raiz exacta en b: %.10f\n", b);
-        printf("Intervalo final: [%.10f, %.10f]\n", a, b);
+        printf("Raiz exacta en b (decimal): %.10f\n", b);
+        printf("Raiz exacta en b (cientifica): %.10e\n", b);
+        printf("Intervalo final (decimal): [%.10f, %.10f]\n", a, b);
+        printf("Intervalo final (cientifica): [%.10e, %.10e]\n", a, b);
         printf("Iteraciones: %d\n", i);
         return 0; 
     }
@@ -71,30 +76,22 @@ int main() {
     printf("\nSeleccione el tipo de tolerancia:\n"
            "  1) Relativa (porcentaje) -> usa e_rel%% = |c - cViejo|/|c| * 100\n"
            "  2) Por cifras decimales  -> usa e_abs  = |c - cViejo|\n");
-    if (scanf("%d", &modoTol) != 1 || (modoTol != 1 && modoTol != 2)) {
-        printf("Entrada invalida.\n"); 
-        return 1;
-    }
+    // Define el criterio de corte que se aplicara en el bucle iterativo
+    scanf("%d", &modoTol);
 
     if (modoTol == 1) {
         // Tolerancia relativa en porcentaje
         printf("Ingrese la tolerancia relativa en porcentaje (ej: 0.01 para 0.01%%): ");
-        if (scanf("%lf", &tolerancia) != 1 || tolerancia <= 0.0) {
-            printf("Entrada invalida.\n"); 
-            return 1;
-        }
+        scanf("%lf", &tolerancia);
     } else {
         // Tolerancia por cifras decimales (p): tol_abs = 0.5 * 10^{-p}
         printf("Ingrese la cantidad de cifras decimales de precision (p>=1): ");
-        if (scanf("%d", &cifrasPrecision) != 1 || cifrasPrecision < 1) {
-            printf("Entrada invalida.\n"); 
-            return 1;
-        }
+        scanf("%d", &cifrasPrecision);
         tolerancia = 0.5 * pow(10.0, -cifrasPrecision); // tolerancia ABSOLUTA
         printf("Tolerancia absoluta calculada: %.12f\n", tolerancia);
     }
 
-    // Bucle de biseccion
+    // Iteraciones del metodo de falsa posicion (regula falsi)
     const int MAX_IT = 200;
     bool primera = true;
 
@@ -118,11 +115,15 @@ int main() {
         // ¿raiz exacta?
         if (fc == 0.0) {
             printf("\nEncontraste el valor exacto de la raiz!\n");
-            printf("Raiz = %.10f\n", c);
-            printf("Intervalo final: [%.10f, %.10f]\n", a, b);
+            printf("Raiz (decimal): %.10f\n", c);
+            printf("Raiz (cientifica): %.10e\n", c);
+            printf("Intervalo final (decimal): [%.10f, %.10f]\n", a, b);
+            printf("Intervalo final (cientifica): [%.10e, %.10e]\n", a, b);
             printf("Iteraciones: %d\n", i);
-            printf("Error absoluto ~ %.10f\n", eAbs);
-            printf("Error relativo %% ~ %.10f\n", eRel);
+            printf("Error absoluto (decimal) ~ %.10f\n", eAbs);
+            printf("Error absoluto (cientifica) ~ %.10e\n", eAbs);
+            printf("Error relativo %% (decimal) ~ %.10f\n", eRel);
+            printf("Error relativo %% (cientifica) ~ %.10e\n", eRel);
             return 0;
         }
 
@@ -153,16 +154,19 @@ int main() {
 
     // Resultados finales
     printf("\nResultados:\n");
-    printf("Raiz aproximada: %.10f\n", c);
-    printf("Intervalo final: [%.10f, %.10f]\n", a, b);
+    printf("Raiz aproximada (decimal): %.10f\n", c);
+    printf("Raiz aproximada (cientifica): %.10e\n", c);
+    printf("Intervalo final (decimal): [%.10f, %.10f]\n", a, b);
+    printf("Intervalo final (cientifica): [%.10e, %.10e]\n", a, b);
     printf("Iteraciones: %d\n", i);
-    printf("Error absoluto (|c - cViejo|): %.10f\n", eAbs);
-    printf("Error relativo (%%): %.10f\n", eRel);
+    printf("Error absoluto (|c - cViejo|) decimal: %.10f\n", eAbs);
+    printf("Error absoluto (|c - cViejo|) cientifica: %.10e\n", eAbs);
+    printf("Error relativo (%%) decimal: %.10f\n", eRel);
+    printf("Error relativo (%%) cientifica: %.10e\n", eRel);
 
     return 0;
 }
 
 double calcularFuncion(double x){
-    // f(x) = -2 + 7x - 5x^2 + 6x^3
     return -2 + (7*x) - (5*pow(x,2)) + (6*pow(x,3));
 }
