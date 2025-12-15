@@ -1,13 +1,14 @@
 #include <stdio.h>
 #include <cmath>
 
-#define D 5 // es la cantidad de datos que se van a ingresar
+#define D 6 // es la cantidad de datos que se van a ingresar
 #define MAX_PUNTOS_PROGRAMA D // la librería usará este valor
 
-#include "../../librerias/splineCubica/spline_cubica.h"
+#include "../../../librerias/splineCubica/spline_cubica.h"
 
 double func(double x){
-    return (x*x) + 1.0;
+    //return (x*x) + 1.0;
+    return pow(1.0 + x*x, -1.0);
 }
 
 void trapecioFunc(double &res);

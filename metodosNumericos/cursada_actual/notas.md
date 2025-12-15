@@ -15,3 +15,6 @@ lagrange: usar lagrange pide y 4
 forma funcional. usar formafuncional4 un poco mejor que la 3 porque incorpora el uso de una libreria para resolver gauss
 
 Spline Cubica: usar la 4, las aproximaciones se mantienen bien dentro de todo y permiten cargar valores indefinidamente 
+
+
+diferenciacion numerica: usar la 2 ya que tiene la formula mejorada que permite mas presicion en los extremos de la tabla, por otro lado tengo otra funcion apra calcular la derivada e puntos especificos 
