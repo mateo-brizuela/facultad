@@ -58,14 +58,14 @@ void jacobi(double matriz[n][n],double vector[n]){
     for (int i = 0; i < n; i++)
     {
         suma = 0.0;
-        for (int j = 0; j < n; j++)
+        for (int j = 0; j < n; j++) // recorro la fila i 
         {
             if (j != i)
             {
-                suma = suma + fabs(matriz[i][j]);    
+                suma = suma + fabs(matriz[i][j]); // suma de los elementos que no estan en la diagonal
             }
         }
-        if (fabs(matriz[i][i]) < suma)
+        if (fabs(matriz[i][i]) < suma) // si el elemento de la diagonal es menor que la suma de los demas elementos de la fila
         {
             dd = false;
         }
@@ -95,11 +95,11 @@ void jacobi(double matriz[n][n],double vector[n]){
     {
         for (int i = 0; i < n; i++)
         {
-            for (int j = 0; j < n; j++)
+            for (int j = 0; j < n; j++) // recorro la fila i
             {
                 if (j != i)
                 {
-                    suma = suma + (matriz[i][j] * xv[j]);
+                    suma = suma + (matriz[i][j] * xv[j]); // suma de los elementos que no estan en la diagonal
                 }
             }
             if (matriz[i][i] == 0)
@@ -108,7 +108,7 @@ void jacobi(double matriz[n][n],double vector[n]){
                 exit(1);
             }
             
-            xn[i] = (vector[i] - suma) / matriz[i][i];
+            xn[i] = (vector[i] - suma) / matriz[i][i]; // calculo del nuevo x
             suma = 0.0;
         }
 

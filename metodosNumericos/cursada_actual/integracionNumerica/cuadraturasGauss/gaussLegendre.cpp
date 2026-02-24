@@ -37,63 +37,64 @@ void gauss_legendre(){
 
     switch (n) {
         case 2: {
-            double xm = a + 0.5 * (b - a); // xm = (a+b)/2
-            double xr = 0.5 * (b - a);  // xr = (b-a)/2
-            double x0 = xm + xr * (-0.577350269); // x0 = primera raiz el -0.577350269 es la raiz de polinomio de legendre de grado 2
-            double x1 = xm + xr * ( 0.577350269); // x1 = segunda raiz
+            double m = a + 0.5 * (b - a); // xm = (a+b)/2
+            double d = 0.5 * (b - a);  // xr = (b-a)/2
+            double x0 = m + d * (-0.577350269); // x0 = primera raiz el -0.577350269 es la raiz de polinomio de legendre de grado 2
+            double x1 = m + d * ( 0.577350269); // x1 = segunda raiz
             double c0 = 1.0000000, c1 = 1.0000000; // pesos
-            integral = xr * (c0 * func(x0) + c1 * func(x1)); // formula de la integral
+            integral = d * (c0 * func(x0) + c1 * func(x1)); // formula de la integral
             break;
         }
 
         case 3: {
-            double xm = a + 0.5 * (b - a);
-            double xr = 0.5 * (b - a);
-            double x0 = xm + xr * (-0.774596669);
-            double x1 = xm + xr * ( 0.0);
-            double x2 = xm + xr * ( 0.774596669);
-            double c0 = 0.5555556, c1 = 0.8888889, c2 = 0.5555556;
-            integral = xr * (c0*func(x0) + c1*func(x1) + c2*func(x2));
+            double m = a + 0.5 * (b - a);
+            double d = 0.5 * (b - a);
+            double x0 = m + d * (-0.774596669);
+            double x1 = m + d * ( 0.0);
+            double x2 = m + d * ( 0.774596669);
+            double c0 = 0.5555556, c1 = 0.8888889, c2 = 0.5555556; // pesos para 3 puntos
+            integral = d * (c0*func(x0) + c1*func(x1) + c2*func(x2));
             break;
         }
 
         case 4: {
-            double xm = a + 0.5 * (b - a);
-            double xr = 0.5 * (b - a);
-            double x0 = xm + xr * (-0.861136312);
-            double x1 = xm + xr * (-0.339981044);
-            double x2 = xm + xr * ( 0.339981044);
-            double x3 = xm + xr * ( 0.861136312);
+            double m = a + 0.5 * (b - a);
+            double d = 0.5 * (b - a);
+            double x0 = m + d * (-0.861136312);
+            double x1 = m + d * (-0.339981044);
+            double x2 = m + d * ( 0.339981044);
+            double x3 = m + d * ( 0.861136312);
             double c0 = 0.3478548, c1 = 0.6521452, c2 = 0.6521452, c3 = 0.3478548;
-            integral = xr * (c0*func(x0) + c1*func(x1) + c2*func(x2) + c3*func(x3));
+            integral = d * (c0*func(x0) + c1*func(x1) + c2*func(x2) + c3*func(x3));
             break;
         }
 
         case 5: {
-            double xm = a + 0.5 * (b - a);
-            double xr = 0.5 * (b - a);
-            double x0 = xm + xr * (-0.906179846);
-            double x1 = xm + xr * (-0.538469310);
-            double x2 = xm + xr * ( 0.0);
-            double x3 = xm + xr * ( 0.538469310);
-            double x4 = xm + xr * ( 0.906179846);
+            double m = a + 0.5 * (b - a);
+            double d = 0.5 * (b - a);
+            double x0 = m + d * (-0.906179846);
+            double x1 = m + d * (-0.538469310);
+            double x2 = m + d * ( 0.0);
+            double x3 = m + d * ( 0.538469310);
+            double x4 = m + d * ( 0.906179846);
             double c0 = 0.2369269, c1 = 0.4786287, c2 = 0.5688889, c3 = 0.4786287, c4 = 0.2369269;
-            integral = xr * (c0*func(x0) + c1*func(x1) + c2*func(x2) + c3*func(x3) + c4*func(x4));
+            integral = d * (c0*func(x0) + c1*func(x1) + c2*func(x2) + c3*func(x3) + c4*func(x4));
             break;
         }
 
         case 6: {
-            double xm = a + 0.5 * (b - a);
+            double m = a + 0.5 * (b - a);
+            double d = 0.5 * (b - a);
             double xr = 0.5 * (b - a);
-            double x0 = xm + xr * (-0.932469514);
-            double x1 = xm + xr * (-0.661209386);
-            double x2 = xm + xr * (-0.238619186);
-            double x3 = xm + xr * ( 0.238619186);
-            double x4 = xm + xr * ( 0.661209386);
-            double x5 = xm + xr * ( 0.932469514);
+            double x0 = m + d * (-0.932469514);
+            double x1 = m + d * (-0.661209386);
+            double x2 = m + d * (-0.238619186);
+            double x3 = m + d * ( 0.238619186);
+            double x4 = m + d * ( 0.661209386);
+            double x5 = m + d * ( 0.932469514);
             double c0 = 0.1713245, c1 = 0.3607616, c2 = 0.4679139,
                    c3 = 0.4679139, c4 = 0.3607616, c5 = 0.1713245;
-            integral = xr * (c0*func(x0) + c1*func(x1) + c2*func(x2) + c3*func(x3) + c4*func(x4) + c5*func(x5));
+            integral = d * (c0*func(x0) + c1*func(x1) + c2*func(x2) + c3*func(x3) + c4*func(x4) + c5*func(x5));
             break;
         }
     }

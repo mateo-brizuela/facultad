@@ -9,6 +9,9 @@
 void cargarVector(double x[n], double y[n]);
 void leerVector(double x[n], double y[n]);
 
+// funcion para mostrar el polinomio resultante
+void mostrarPolinomio(double coef[p]);
+
 // funcion para armar la matriz, leerla, y resolverla
 void armarMatriz(double x[n], double y[n], double matriz[p][p],double vector[p]);
 void leerMatriz(double A[p][p], double B[p]);
@@ -28,7 +31,7 @@ int main(int argc, char const *argv[])
     cargarVector(x,y);
     armarMatriz(x,y,matriz,vector);
     gauss(matriz,vector,incognitas);
-
+    mostrarPolinomio(incognitas);
 
     
     return 0;
@@ -188,6 +191,46 @@ void gauss(double A[p][p],double B[p], double x[p]){
     {
         printf("x%d=%.2f    ",i+1,x[i]);
     }
+    printf("\n\n");
+}
+
+void mostrarPolinomio(double coef[p]){
+    printf("=====================================\n");
+    printf("POLINOMIO RESULTANTE:\n");
+    printf("y = ");
+    
+    for (int i = 0; i < p; i++)
+    {
+        // Mostrar el signo
+        if (i > 0 && coef[i] >= 0) {
+            printf(" + ");
+        } else if (i > 0) {
+            printf(" ");
+        }
+        
+        // Mostrar el coeficiente
+        printf("%.6f", coef[i]);
+        
+        // Mostrar la potencia de x
+        if (i > 0) {
+            if (i == 1) {
+                printf("*x");
+            } else {
+                printf("*x^%d", i);
+            }
+        }
+    }
+    printf("\n\n");
+    
+    // Mostrar tabla de coeficientes
+    printf("Coeficientes:\n");
+    printf("Grado\t| Coeficiente\n");
+    printf("-----------\n");
+    for (int i = 0; i < p; i++)
+    {
+        printf("%d\t| %.6f\n", i, coef[i]);
+    }
+    printf("=====================================");
     printf("\n\n");
 }
 

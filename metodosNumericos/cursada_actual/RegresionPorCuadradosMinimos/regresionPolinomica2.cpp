@@ -94,22 +94,22 @@ void leerVector(double x[n], double y[n]){
 
 void armarMatriz(double x[n], double y[n], double matriz[p][p], double vector[p]){
     // Construye el sistema de ecuaciones normales para regresión polinomial
-    for (int l = 0; l < p; l++) {
+    for (int l = 0; l < p; l++) { // para cada fila de la matriz
         double sumaxy = 0.0;
         
         // Calcula el término del vector independiente: Σ(x_i^l * y_i)
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < n; i++) { // suma todos los datos de x(elevado) e y
             sumaxy += pow(x[i], l) * y[i];
         }
         vector[l] = sumaxy;
         
         // Calcula los términos de la matriz: Σ(x_i^(l+m))
-        for (int m = 0; m < p; m++) {
+        for (int m = 0; m < p; m++) { // recorre cada columna de la matriz
             double sumax = 0.0;
-            for (int i = 0; i < n; i++) {
+            for (int i = 0; i < n; i++) { // suma todos los datos de x elevado a (l+m)
                 sumax += pow(x[i], l + m);
             }
-            matriz[l][m] = sumax;
+            matriz[l][m] = sumax; // asigna el valor a la matriz
         }
     }
     

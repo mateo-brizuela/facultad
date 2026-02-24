@@ -213,6 +213,5 @@ int main(int argc, char const *argv[])
 // Ejemplo de test: f(x) = x^3 - x - 2
 double calcularFuncion(double x)
 {
-    double fx = pow(x, 3) - x - 2;
-    return fx;
+    return log(x) + 0.5*x - 5.0;
 }

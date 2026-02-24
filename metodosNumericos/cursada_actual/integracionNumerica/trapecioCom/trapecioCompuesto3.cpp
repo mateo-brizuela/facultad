@@ -112,16 +112,16 @@ void trapecioTabla(double &res, double x[D], double y[D]) {
     printf("Ingrese la cantidad de subintervalos que desea (n > 0): ");
     if (scanf("%d", &n) != 1 || n <= 0) { printf("Numero de subintervalos invalido.\n"); return; }
 
-    double a = x[0];
-    double b = x[D-1];
+    double a = x[0]; // primer punto de la tabla original
+    double b = x[D-1]; // último punto de la tabla original
     if (b <= a) { printf("Error: rango inválido.\n"); return; }
 
-    double h = (b - a) / n;
-    double matriz_coeficientes[MAX_SEGMENTOS][4];
+    double h = (b - a) / n; // paso para la nueva tabla equiespaciada
+    double matriz_coeficientes[MAX_SEGMENTOS][4]; // para almacenar coeficientes del spline (D puntos => D-1 segmentos)
 
     // puntos equiespaciados nuevos
-    double *x_new = new double[n+1];
-    double *y_new = new double[n+1];
+    double *x_new = new double[n+1]; // n subintervalos => n+1 puntos, desde a hasta b con paso h
+    double *y_new = new double[n+1]; // valores del spline evaluados en x_new (se llenan por interpolación o se copian de y[] si coinciden con x[])
     for (int i = 0; i <= n; i++) x_new[i] = a + i * h;
 
     // si el usuario pidió exactamente D puntos y los x_new coinciden con x[] (por si eligió opt==2)

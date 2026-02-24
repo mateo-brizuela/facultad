@@ -53,7 +53,7 @@ int main(int argc, char const *argv[])
         }
 
         x1 = x0 - (f(x0)/fDeriv(x0)); // se traza la recta tangente y se toma el punto en el eje x
-        error = fabs(x1-x0); // se calcula el errorr
+        error = fabs(x1-x0); // se calcula el error
         x0 = x1; // proxima iteracion
         
     } while (error > tolerancia && i < 10000);

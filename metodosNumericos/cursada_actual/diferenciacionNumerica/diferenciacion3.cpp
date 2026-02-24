@@ -67,11 +67,11 @@ void diferenciacion_numerica(){
     xi[n] = b;        // asegurar el extremo derecho exacto
 
     // derivadas: forward en a, central en interiores, backward en b
-    fp[0] = (-3.0 * func(xi[0]) + 4.0 * func(xi[1]) - func(xi[2])) / (2.0 * h);
+    fp[0] = (-3.0 * func(xi[0]) + 4.0 * func(xi[1]) - func(xi[2])) / (2.0 * h); // forward 3-point
     for (int i = 1; i < n; i++) {
-        fp[i] = (func(xi[i] + h) - func(xi[i] - h)) / (2.0 * h);
+        fp[i] = (func(xi[i] + h) - func(xi[i] - h)) / (2.0 * h); // central 2-point
     }
-    fp[n] = (3.0 * func(xi[n]) - 4.0 * func(xi[n - 1]) + func(xi[n - 2])) / (2.0 * h);
+    fp[n] = (3.0 * func(xi[n]) - 4.0 * func(xi[n - 1]) + func(xi[n - 2])) / (2.0 * h); // backward 3-point
 
     // Imprimir resultados
     printf("Resultados de la diferenciación numérica (usando func):\n");
@@ -111,6 +111,7 @@ void derivada_punto_interactiva() {
 
 /* ------------------ NUEVA función: diferenciación desde tabla (x,y) ------------------ */
 
+// se puede modificar para que haga foward/backward de 3 puntos en los extremos si se desea
 void diferenciacion_desde_tabla() {
     int N = 0;
     printf("\nDiferenciacion desde tabla (x_i, y_i) equiespaciada\n");

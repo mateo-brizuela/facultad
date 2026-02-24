@@ -99,12 +99,12 @@ void gSeidel(double matriz[n][n],double vector[n]){
 
             for (int j = 0; j < i; j++) // este bucle itera desde la primer columna hasta 
             {
-                suma = suma + matriz[i][j] * xn[j];
+                suma = suma + matriz[i][j] * xn[j]; // uso los valores nuevos ya calculados
             }
 
-            for (int j = i+1; j < n; j++)
+            for (int j = i+1; j < n; j++) // este bucle itera desde la columna i+1 hasta la ultima columna
             {
-                suma  = suma + matriz[i][j] * xv[j];
+                suma  = suma + matriz[i][j] * xv[j]; // uso los valores viejos
             }
 
             if (matriz[i][i] == 0.0)
