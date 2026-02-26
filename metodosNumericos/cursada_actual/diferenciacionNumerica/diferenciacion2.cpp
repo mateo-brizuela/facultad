@@ -74,7 +74,7 @@ void diferenciacion_numerica(){
     }
 
     // Exportar resultados a archivos (se guardan en ./outputs/)
-    exportarDerivadas("resultados_diferenciacion", xi, fp, n + 1);
+    exportarTabla("resultados_diferenciacion", xi, fp, n + 1);
 }
 
 // NUEVO: modo interactivo para derivada en un punto

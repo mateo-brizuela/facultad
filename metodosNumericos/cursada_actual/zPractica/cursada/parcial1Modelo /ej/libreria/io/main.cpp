@@ -8,7 +8,7 @@ int main(void) {
     int n = (int)(sizeof(xi) / sizeof(xi[0]));
 
     printf("Exportando %d puntos con base 'misResultados'\n", n);
-    exportarDerivadas("misResultados", xi, yi, n);
+    exportarTabla("misResultados", xi, yi, n);
     printf("Archivos generados en el directorio de ejecución:\n");
     printf(" - misResultados_tabla.txt\n");
     printf(" - misResultados_geogebra.txt\n");

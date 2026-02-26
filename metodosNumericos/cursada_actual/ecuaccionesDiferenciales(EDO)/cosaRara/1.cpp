@@ -67,11 +67,11 @@ int main() {
 
     // Exportar (./outputs/) con tu helper
     // - Serie numérica (dos pasos)
-    exportarDerivadas("edo_dos_pasos_num", x, y, P);
+    exportarTabla("edo_dos_pasos_num", x, y, P);
     // - Serie exacta
-    exportarDerivadas("edo_dos_pasos_exacta", x, yex, P);
+    exportarTabla("edo_dos_pasos_exacta", x, yex, P);
     // - Serie de error (mismo eje x)
-    exportarDerivadas("edo_dos_pasos_error", x, err, P);
+    exportarTabla("edo_dos_pasos_error", x, err, P);
 
     delete[] x;
     delete[] y;

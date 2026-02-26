@@ -52,6 +52,6 @@ void diferenciacion_numerica(){
     }
 
     // Exportar resultados a archivos
-    exportarDerivadas("resultados_diferenciacion", xi, fp, n + 1);
+    exportarTabla("resultados_diferenciacion", xi, fp, n + 1);
 
 }

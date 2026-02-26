@@ -5,7 +5,7 @@
 
 // y' = f(x,y)
 double f(double x, double y) {
-    return 2*x; // ejemplo
+    return -((2.0*x) + 1.0)*sqrt(y);
 }
 
 void rk4();
@@ -117,7 +117,7 @@ void rk4() {
     }
 
     // Exportar (./outputs/)
-    exportarDerivadas("rk4_resultados", x, y, P);
+    exportarTabla("rk4_resultados", x, y, P);
 
     delete[] x;
     delete[] y;

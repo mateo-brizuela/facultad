@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <cmath>
 
-#define D 5 // cantidad fija de puntos que se cargan en la tabla
+#define D 11 // cantidad fija de puntos que se cargan en la tabla
 #define MAX_PUNTOS_PROGRAMA D // la librería usa este valor
 
 #include "../../librerias/splineCubica/spline_cubica.h"

@@ -15,7 +15,7 @@
 /* d: número de puntos de entrada (nodos) */
 /* n: número de incógnitas del sistema lineal = 4*(d-1) */
 /* m: número de intervalos = d-1 (cada intervalo tiene 4 coeficientes a,b,c,d) */
-#define d 5
+#define d 9
 #define n 4*(d-1)
 #define m d-1
 

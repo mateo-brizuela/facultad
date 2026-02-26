@@ -6,7 +6,7 @@
 // y' = f(x,y)
 double f(double x, double y) {
     //return 2*x; // ejemplo
-    return -((2*x) + 1.0)*sqrt(y);
+    return (1.0+x)*sqrt(y);
 }
 
 void euler2();
@@ -109,7 +109,7 @@ void euler2() {
     }
 
     // Exportar (./outputs/)
-    exportarDerivadas("euler2_resultados", x, y, P);
+    exportarTabla("euler2_resultados", x, y, P);
 
     delete[] x;
     delete[] y;

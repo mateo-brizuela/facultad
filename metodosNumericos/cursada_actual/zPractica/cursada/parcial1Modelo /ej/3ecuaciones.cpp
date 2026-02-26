@@ -13,7 +13,7 @@
    - El programa acepta dos modos de mallado:
        modo = 1: el usuario indica N (cantidad de subintervalos) -> h = (b-a)/N
        modo = 2: el usuario indica h (paso) -> se calcula P = numero de puntos
-   - Exporta resultados con exportarDerivadas(nombre, x, y, P).
+   - Exporta resultados con exportarTabla(nombre, x, y, P).
 */
 
 /* -----------------------
@@ -131,7 +131,7 @@ int main() {
    Comentarios generales:
     - Cada método construye arrays x[], y1[], y2[], y3[] de longitud P (nº de puntos)
     - Se asume que x0 ≈ a; si no, se ajusta y se notifica.
-    - Al finalizar se imprimen resultados y se exportan con exportarDerivadas.
+    - Al finalizar se imprimen resultados y se exportan con exportarTabla.
 */
 
 /* Euler explícito para el sistema de 3 ecuaciones */
@@ -169,9 +169,9 @@ void euler3(int modo, int N, double h, double a, double b, double x0,
     for (int i=0;i<P;++i)
         printf("%d\t%.8f\t%.8f\t%.8f\t%.8f\n", i, x[i], y1[i], y2[i], y3[i]);
 
-    exportarDerivadas("euler3_y1", x, y1, P);
-    exportarDerivadas("euler3_y2", x, y2, P);
-    exportarDerivadas("euler3_y3", x, y3, P);
+    exportarTabla("euler3_y1", x, y1, P);
+    exportarTabla("euler3_y2", x, y2, P);
+    exportarTabla("euler3_y3", x, y3, P);
 
     delete[] x; delete[] y1; delete[] y2; delete[] y3;
 }
@@ -258,9 +258,9 @@ void rk4_3(int modo, int N, double h, double a, double b, double x0,
     for (int i=0;i<P;++i)
         printf("%d\t%.8f\t%.8f\t%.8f\t%.8f\n", i, x[i], y1[i], y2[i], y3[i]);
 
-    exportarDerivadas("rk4_3_y1", x, y1, P);
-    exportarDerivadas("rk4_3_y2", x, y2, P);
-    exportarDerivadas("rk4_3_y3", x, y3, P);
+    exportarTabla("rk4_3_y1", x, y1, P);
+    exportarTabla("rk4_3_y2", x, y2, P);
+    exportarTabla("rk4_3_y3", x, y3, P);
 
     delete[] x; delete[] y1; delete[] y2; delete[] y3;
 }
@@ -306,9 +306,9 @@ void heun3(int modo, int N, double h, double a, double b, double x0,
     for (int i=0;i<P;++i)
         printf("%d\t%.8f\t%.8f\t%.8f\t%.8f\n", i, x[i], y1[i], y2[i], y3[i]);
 
-    exportarDerivadas("heun3_y1", x, y1, P);
-    exportarDerivadas("heun3_y2", x, y2, P);
-    exportarDerivadas("heun3_y3", x, y3, P);
+    exportarTabla("heun3_y1", x, y1, P);
+    exportarTabla("heun3_y2", x, y2, P);
+    exportarTabla("heun3_y3", x, y3, P);
 
     delete[] x; delete[] y1; delete[] y2; delete[] y3;
 }

@@ -5,7 +5,7 @@
 
 // prototipo de funciones
 double func(double x){ // funcion matematica
-    return exp(x)*sin(x);
+    return exp(x*x);
 }
 
 void gauss_legendre();
@@ -37,14 +37,18 @@ void gauss_legendre(){
 
     switch (n) {
         case 2: {
-            double m = a + 0.5 * (b - a); // xm = (a+b)/2
-            double d = 0.5 * (b - a);  // xr = (b-a)/2
+            double m = a + 0.5 * (b - a); // xm = (a+b)/2 m se encarga de trasladar el intervalo a la mitad del intervalo original
+            double d = 0.5 * (b - a);  // xr = (b-a)/2 d se encarga de escalar el intervalo para que tenga longitud 1
             double x0 = m + d * (-0.577350269); // x0 = primera raiz el -0.577350269 es la raiz de polinomio de legendre de grado 2
             double x1 = m + d * ( 0.577350269); // x1 = segunda raiz
             double c0 = 1.0000000, c1 = 1.0000000; // pesos
             integral = d * (c0 * func(x0) + c1 * func(x1)); // formula de la integral
             break;
         }
+
+        // x0, x1, x2 son las raices del polinomio de legendre de grado 3
+        // se multiplican por d para trasladar y escalar el intervalo a [-1,1], 
+        //luego se suman a m para trasladar al intervalo original [a,b]
 
         case 3: {
             double m = a + 0.5 * (b - a);

@@ -28,7 +28,7 @@
 #include <stdio.h>
 #include <math.h>
 
-#define n 4  // número de puntos para interpolación (índices 0 a n-1)
+#define n 3  // número de puntos para interpolación (índices 0 a n-1)
 
 // Función matemática para calcular y automáticamente a partir de x
 double funcionMatematica(double x) {

@@ -1,10 +1,25 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#define n 2
+#define n 4
 
 /*
     Resolución de sistemas lineales por eliminación gaussiana con pivoteo
+
+    PIVOTEO EN ELIMINACIÓN GAUSSIANA:
+    
+    - SIN PIVOTEO: Se usa cuando los elementos diagonales son suficientemente
+      grandes (no cercanos a cero). Es más rápido pero puede producir errores
+      de redondeo significativos.
+    
+    - CON PIVOTEO: Es necesario cuando:
+      * Un elemento diagonal A[i][i] es muy pequeño o cercano a cero
+      * Queremos minimizar errores de redondeo y mejorar la estabilidad numérica
+      * Buscamos mayor precisión en la solución
+      
+    El pivoteo parcial (usado aquí) intercambia filas para colocar el elemento
+    de mayor valor absoluto en la posición diagonal, mejorando la estabilidad
+    del método sin aumentar significativamente el costo computacional.
 */
 
 void cargar(double A[n][n], double B[n]);
@@ -62,6 +77,7 @@ void gauss(double A[n][n], double B[n], double x[n]) {
     for (int i = 0; i < n; i++) {
         // Pivoteo parcial
         if (fabs(A[i][i]) < ceroDef) { 
+            printf("Pivote cercano a cero detectado en A[%d][%d] = %.6f\n", i, i, A[i][i]);
             int p = i;
             for (int l = i + 1; l < n; l++) { // Buscar el mayor pivote
                 if (fabs(A[l][i]) > fabs(A[p][i])) {

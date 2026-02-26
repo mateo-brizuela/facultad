@@ -12,11 +12,11 @@
 double func(double x){
     return (x*x) + 1.0; // función de ejemplo (no se usa en la nueva opción tabla)
 }
-void diferenciacion_numerica();
-void derivada_punto_interactiva();
+void diferenciacion_numerica(); // opción original: diferenciación numérica en tabla usando func(x)
+void derivada_punto_interactiva(); // opción original: aproximar derivada en puntos individuales (x0, h) usando func(x)
 
 // NUEVA: diferenciación desde tabla (x,y) equiespaciada, usando diferencias de orden mínimo
-void diferenciacion_desde_tabla();
+void diferenciacion_desde_tabla(); // opción nueva: el usuario ingresa una tabla de puntos (x_i, y_i) equiespaciada, se calcula la derivada usando diferencias finitas
 
 int main(int argc, char const *argv[])
 {
@@ -80,7 +80,7 @@ void diferenciacion_numerica(){
     }
 
     // Exportar resultados a archivos (se guardan en ./outputs/)
-    exportarDerivadas("resultados_diferenciacion", xi, fp, n + 1);
+    exportarTabla("resultados_diferenciacion", xi, fp, n + 1);
 }
 
 void derivada_punto_interactiva() {
@@ -167,7 +167,7 @@ void diferenciacion_desde_tabla() {
     }
 
     // Exportar resultados (mismo formato que la versión original)
-    exportarDerivadas("resultados_diferenciacion_tabla", x, fp, N);
+    exportarTabla("resultados_diferenciacion_tabla", x, fp, N);
 
     delete[] x; delete[] y; delete[] fp;
 }

@@ -1,18 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <cmath>
-#define n 3
+#define n 4
 
 void cargar(double matriz[n][n], double vector[n]);
+void cargarVectorInicial(double xv[n]);
 void leer(double matriz[n][n], double vector[n]);
-void gSeidel(double matriz[n][n], double vector[n]);
+void gSeidel(double matriz[n][n],double vector[n],double xv[n]);
 
 int main(int argc, char const *argv[])
 {
-    double matriz[n][n] , vector[n];
+    double matriz[n][n] , vector[n], xv[n];
     cargar(matriz, vector);
+    cargarVectorInicial(xv);
     leer(matriz, vector);
-    gSeidel(matriz,vector);
+    gSeidel(matriz,vector,xv);
 
     return 0;
 }
@@ -23,7 +25,7 @@ void cargar(double matriz[n][n], double vector[n]){
     {
         for (int j = 0; j < n; j++)
         {
-            printf("ingrese el elemento de la fila %d y la columna %d: ",(i+1),(j+1));
+            printf("Ingrese el elemento [%d][%d]: ",i+1,j+1);
             scanf("%lf",&matriz[i][j]);
         }
     }
@@ -31,10 +33,20 @@ void cargar(double matriz[n][n], double vector[n]){
     printf("vamos a cargar el vector independiente\n");
     for (int i = 0; i < n; i++)
     {
-        printf("ingrese el el elemento b%d: ",i);
+        printf("Ingrese el elemento b[%d]: ",i);
         scanf("%lf",&vector[i]);
     }
 
+    printf("\n");
+}
+
+void cargarVectorInicial(double xv[n]){
+    printf("vamos a cargar el vector inicial xv\n");
+    for (int i = 0; i < n; i++)
+    {
+        printf("Ingrese el elemento xv[%d]: ",i);
+        scanf("%lf",&xv[i]);
+    }
     printf("\n");
 }
 
@@ -51,7 +63,7 @@ void leer(double matriz[n][n], double vector[n]){
     printf("\n");
 }
 
-void gSeidel(double matriz[n][n],double vector[n]){
+void gSeidel(double matriz[n][n],double vector[n],double xv[n]){
     bool dd = true; // es un booleano para ver si la matriz es diagonalmente dominante 
     double suma = 0.0;
     // verificacion si la matriz es diagonalmente dominante
@@ -76,9 +88,11 @@ void gSeidel(double matriz[n][n],double vector[n]){
         printf("ADVERTENCIA: la matriz no es diagonalmente dominante\n");
     }
 
-    // empezamos a iterar con el metodo jacobi 
-    double xn[n] = {0.0}; // este es el arreglo que contiene los x nuevos
-    double xv[n] = {0.0}; // este es el arreglo que contienen los x viejos
+    // empezamos a iterar con el metodo gauss-seidel 
+    double xn[n];
+    for (int i = 0; i < n; i++) {
+        xn[i] = xv[i];  // Inicializar xn con los valores iniciales
+    }
     double errorV = 1000.0; // este es el error viejo
     double error = 0.0; // error nuevo
     double tolerancia = 0.0;
@@ -97,7 +111,7 @@ void gSeidel(double matriz[n][n],double vector[n]){
         {
             suma = 0.0;
 
-            for (int j = 0; j < i; j++) // este bucle itera desde la primer columna hasta 
+            for (int j = 0; j < i; j++) // este bucle itera desde la primer columna hasta i
             {
                 suma = suma + matriz[i][j] * xn[j]; // uso los valores nuevos ya calculados
             }
@@ -143,10 +157,10 @@ void gSeidel(double matriz[n][n],double vector[n]){
     } while (error > tolerancia);
 
     printf("resultados: \n");
-    printf("vector de incognitas: ");
+    printf("vector de incognitas: \n");
     for (int i = 0; i < n; i++)
     {
-        printf("x%d=%.2f    ",i+1,xn[i]);
+        printf("x%d=%.2f\n",i+1,xn[i]);
     }
     printf("iteraciones: %d\n"
             "error: %.9f",iter,error);

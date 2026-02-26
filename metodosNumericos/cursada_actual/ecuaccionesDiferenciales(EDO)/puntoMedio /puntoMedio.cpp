@@ -112,7 +112,7 @@ void puntoMedio() {
     }
 
     // Exportar (./outputs/)
-    exportarDerivadas("puntoMedio_resultados", x, y, P);
+    exportarTabla("puntoMedio_resultados", x, y, P);
 
     delete[] x;
     delete[] y;

@@ -120,7 +120,7 @@ void rk4() {
     }
 
     // Exportar (./outputs/)
-    exportarDerivadas("rk4_resultados", x, y, P);
+    exportarTabla("rk4_resultados", x, y, P);
 
     delete[] x;
     delete[] y;

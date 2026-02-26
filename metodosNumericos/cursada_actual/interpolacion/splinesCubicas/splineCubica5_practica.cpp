@@ -321,6 +321,6 @@ void generarTablaEquiespaciada(const double x[d], const double coeficientes[n], 
     }
 
     // (Opcional) exportar resultados a archivos si se desea (activar exportarResultados)
-    // exportarDerivadas("spline_equi_exact_pract", xe, ye_exact, puntos);
-    // exportarDerivadas("spline_equi_interp_pract", xe, ye_interp, puntos);
+    // exportarTabla("spline_equi_exact_pract", xe, ye_exact, puntos);
+    // exportarTabla("spline_equi_interp_pract", xe, ye_interp, puntos);
 }

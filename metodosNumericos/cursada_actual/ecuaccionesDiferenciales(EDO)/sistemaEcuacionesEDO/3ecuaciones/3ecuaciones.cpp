@@ -13,7 +13,7 @@
    - El programa acepta dos modos de mallado:
        modo = 1: el usuario indica N (cantidad de subintervalos) -> h = (b-a)/N
        modo = 2: el usuario indica h (paso) -> se calcula P = numero de puntos
-   - Exporta resultados con exportarDerivadas(nombre, x, y, P).
+   - Exporta resultados con exportarTabla(nombre, x, y, P).
 */
 
 /* -----------------------
@@ -25,13 +25,13 @@
    Reemplazá las expresiones por las de tu modelo.
 */
 double f1(double x, double y1, double y2, double y3) {
-    return 3.0*x + y2 - y3; // ejemplo
+    return y2;
 }
 double f2(double x, double y1, double y2, double y3) {
-    return x*x - y1 + 0.5*y3; // ejemplo
+    return y3;
 }
 double f3(double x, double y1, double y2, double y3) {
-    return -y2 + sin(x); // ejemplo
+    return 4.0*y3 -24.0*y1 + 24.0*x*x -16.0;
 }
 
 /* Prototipos de los métodos implementados:
@@ -45,6 +45,8 @@ double f3(double x, double y1, double y2, double y3) {
 */
 void euler3(int modo, int N, double h, double a, double b, double x0,
             double y10, double y20, double y30);
+void puntoMedio3(int modo, int N, double h, double a, double b, double x0,
+                 double y10, double y20, double y30);
 void rk4_3(int modo, int N, double h, double a, double b, double x0,
            double y10, double y20, double y30);
 void heun3(int modo, int N, double h, double a, double b, double x0,
@@ -120,6 +122,7 @@ int main() {
 
     printf("\nEjecutando métodos...\n");
     euler3(modo, N, h, a, b, x0, y10, y20, y30);
+    puntoMedio3(modo, N, h, a, b, x0, y10, y20, y30);
     rk4_3 (modo, N, h, a, b, x0, y10, y20, y30);
     heun3(modo, N, h, a, b, x0, y10, y20, y30);
     return 0;
@@ -131,7 +134,7 @@ int main() {
    Comentarios generales:
     - Cada método construye arrays x[], y1[], y2[], y3[] de longitud P (nº de puntos)
     - Se asume que x0 ≈ a; si no, se ajusta y se notifica.
-    - Al finalizar se imprimen resultados y se exportan con exportarDerivadas.
+    - Al finalizar se imprimen resultados y se exportan con exportarTabla.
 */
 
 /* Euler explícito para el sistema de 3 ecuaciones */
@@ -169,9 +172,68 @@ void euler3(int modo, int N, double h, double a, double b, double x0,
     for (int i=0;i<P;++i)
         printf("%d\t%.8f\t%.8f\t%.8f\t%.8f\n", i, x[i], y1[i], y2[i], y3[i]);
 
-    exportarDerivadas("euler3_y1", x, y1, P);
-    exportarDerivadas("euler3_y2", x, y2, P);
-    exportarDerivadas("euler3_y3", x, y3, P);
+    exportarTabla("euler3_y1", x, y1, P);
+    exportarTabla("euler3_y2", x, y2, P);
+    exportarTabla("euler3_y3", x, y3, P);
+
+    delete[] x; delete[] y1; delete[] y2; delete[] y3;
+}
+
+/* Punto Medio (Runge-Kutta de orden 2) para el sistema de 3 ecuaciones */
+void puntoMedio3(int modo, int N, double h, double a, double b, double x0,
+                 double y10, double y20, double y30) {
+    const double eps = 1e-12;
+    int P;
+    calcularMallado(modo, N, h, a, b, &N, &h, &P);
+
+    if (fabs(x0 - a) > eps) { printf("[PuntoMedio3] x0!=a -> ajustado\n"); x0 = a; }
+
+    double *x = new double[P];
+    double *y1 = new double[P];
+    double *y2 = new double[P];
+    double *y3 = new double[P];
+
+    x[0]=x0; y1[0]=y10; y2[0]=y20; y3[0]=y30;
+
+    for (int i=1; i<P; ++i) {
+        double xn  = x[i-1];
+        double y1n = y1[i-1];
+        double y2n = y2[i-1];
+        double y3n = y3[i-1];
+
+        x[i] = xn + h;
+
+        // Punto medio: k1 = f(xn, y1n, y2n, y3n)
+        double k1_1 = f1(xn, y1n, y2n, y3n);
+        double k1_2 = f2(xn, y1n, y2n, y3n);
+        double k1_3 = f3(xn, y1n, y2n, y3n);
+
+        // Evaluación en el punto medio con pendiente k1
+        double xp  = xn + h/2.0;
+        double y1p = y1n + (h/2.0)*k1_1;
+        double y2p = y2n + (h/2.0)*k1_2;
+        double y3p = y3n + (h/2.0)*k1_3;
+
+        // k2 = f(xn + h/2, y1n + (h/2)*k1_1, y2n + (h/2)*k1_2, y3n + (h/2)*k1_3)
+        double k2_1 = f1(xp, y1p, y2p, y3p);
+        double k2_2 = f2(xp, y1p, y2p, y3p);
+        double k2_3 = f3(xp, y1p, y2p, y3p);
+
+        // Actualización: y[i] = y[i-1] + h * k2
+        y1[i] = y1n + h * k2_1;
+        y2[i] = y2n + h * k2_2;
+        y3[i] = y3n + h * k2_3;
+    }
+    if (modo==1) x[P-1]=b;
+
+    printf("[PuntoMedio3] modo=%d N=%d P=%d h=%.6f\n", modo, N, P, h);
+    printf("i\t x\t\t y1\t\t y2\t\t y3\n");
+    for (int i=0;i<P;++i)
+        printf("%d\t%.8f\t%.8f\t%.8f\t%.8f\n", i, x[i], y1[i], y2[i], y3[i]);
+
+    exportarTabla("puntoMedio3_y1", x, y1, P);
+    exportarTabla("puntoMedio3_y2", x, y2, P);
+    exportarTabla("puntoMedio3_y3", x, y3, P);
 
     delete[] x; delete[] y1; delete[] y2; delete[] y3;
 }
@@ -258,9 +320,9 @@ void rk4_3(int modo, int N, double h, double a, double b, double x0,
     for (int i=0;i<P;++i)
         printf("%d\t%.8f\t%.8f\t%.8f\t%.8f\n", i, x[i], y1[i], y2[i], y3[i]);
 
-    exportarDerivadas("rk4_3_y1", x, y1, P);
-    exportarDerivadas("rk4_3_y2", x, y2, P);
-    exportarDerivadas("rk4_3_y3", x, y3, P);
+    exportarTabla("rk4_3_y1", x, y1, P);
+    exportarTabla("rk4_3_y2", x, y2, P);
+    exportarTabla("rk4_3_y3", x, y3, P);
 
     delete[] x; delete[] y1; delete[] y2; delete[] y3;
 }
@@ -306,9 +368,9 @@ void heun3(int modo, int N, double h, double a, double b, double x0,
     for (int i=0;i<P;++i)
         printf("%d\t%.8f\t%.8f\t%.8f\t%.8f\n", i, x[i], y1[i], y2[i], y3[i]);
 
-    exportarDerivadas("heun3_y1", x, y1, P);
-    exportarDerivadas("heun3_y2", x, y2, P);
-    exportarDerivadas("heun3_y3", x, y3, P);
+    exportarTabla("heun3_y1", x, y1, P);
+    exportarTabla("heun3_y2", x, y2, P);
+    exportarTabla("heun3_y3", x, y3, P);
 
     delete[] x; delete[] y1; delete[] y2; delete[] y3;
 }

@@ -112,7 +112,7 @@ void euler2() {
     }
 
     // Exportar (./outputs/)
-    exportarDerivadas("euler2_resultados", x, y, P);
+    exportarTabla("euler2_resultados", x, y, P);
 
     delete[] x;
     delete[] y;

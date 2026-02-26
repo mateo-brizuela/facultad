@@ -10,13 +10,15 @@
 double f1(double x, double y1, double y2) {
     // ejemplo acoplado simple: y1' = y2 - (2x+1)*sqrt(fmax(y1,0))
     //return y2 - ((2*x) + 1.0) * sqrt(fmax(y1, 0.0));
-    return 3.0*x + y2;
+    //return 3.0*x + y2;
+    return y2;
 }
 
 double f2(double x, double y1, double y2) {
     // ejemplo acoplado: y2' = -y1 - (2*x+1)*sqrt(fmax(y2,0))
     //return -y1 - ((2*x) + 1.0) * sqrt(fmax(y2, 0.0));
-    return (x*x) -y1 -1.0;
+    //return (x*x) -y1 -1.0;
+    return -5.0*y1*y2 - (y1+7.0)*sin(x);
 }
 
 //prototipo de funciones (ahora reciben la configuracion de discretizacion)
@@ -25,28 +27,73 @@ double f2(double x, double y1, double y2) {
 // - N: número de subintervalos (si modo==1)
 // - h: paso (si modo==2)
 void euler(int modo, int N, double h, double a, double b, double x0, double y10, double y20);
+void puntoMedio(int modo, int N, double h, double a, double b, double x0, double y10, double y20);
 void rk4  (int modo, int N, double h, double a, double b, double x0, double y10, double y20);
 void heun (int modo, int N, double h, double a, double b, double x0, double y10, double y20);
 
 // Función auxiliar para calcular N,h,P según modo
+/**
+ * @brief Calcula el mallado (discretización) según el modo elegido
+ * 
+ * Convierte los parámetros de entrada (modo, N, h) en los valores finales
+ * necesarios para resolver la EDO: N (subintervalos), h (paso), P (cantidad de puntos)
+ * 
+ * @param modo      1 = usar N subintervalos (calcula h automáticamente)
+ *                  2 = usar paso h (calcula N y P automáticamente)
+ * @param N_in      N ingresado por usuario (solo si modo==1)
+ * @param h_in      h ingresado por usuario (solo si modo==2)
+ * @param a         Extremo izquierdo del intervalo [a,b]
+ * @param b         Extremo derecho del intervalo [a,b]
+ * @param N_out     Puntero para devolver N calculado
+ * @param h_out     Puntero para devolver h calculado
+ * @param P_out     Puntero para devolver P = cantidad total de puntos
+ * 
+ * @note Relación: P = N + 1 (cantidad de puntos = subintervalos + 1)
+ * @note Relación: h = (b - a) / N (espaciado uniforme)
+ */
 static void calcularMallado(int modo, int N_in, double h_in, double a, double b,
                             int *N_out, double *h_out, int *P_out) {
-    const double eps = 1e-12;
+    const double eps = 1e-12;  // tolerancia para comparaciones con cero
     int N = N_in;
     double h = h_in;
     int P = 0;
-    if (modo == 2) { // por h
-        if (h <= 0.0) h = b - a;
+    
+    if (modo == 2) {
+        // MODO 2: Usuario especifica el paso h
+        // Calcular cuántos puntos caben en [a,b] con ese paso
+        
+        if (h <= 0.0) h = b - a;  // seguridad: si h inválido, usar intervalo completo
+        
+        // Contar puntos: comenzar en 'a' y avanzar de h en h hasta superar 'b'
         double xt = a;
-        while (xt <= b + eps) { ++P; xt += h; }
+        while (xt <= b + eps) {
+            ++P;
+            xt += h;
+        }
+        
+        // Mínimo 1 punto para evitar división por cero
         if (P < 1) P = 1;
+        
+        // Deducir N a partir de P (relación: N = P - 1)
         N = P - 1;
-    } else {         // por N
-        if (N <= 0) N = 1;
+        
+    } else {
+        // MODO 1: Usuario especifica cantidad de subintervalos N
+        // Calcular h y P a partir de N
+        
+        if (N <= 0) N = 1;  // mínimo 1 subintervalo
+        
+        // Calcular paso uniforme h que divide [a,b] en N partes iguales
         h = (b - a) / (double)N;
+        
+        // Cantidad de puntos: N subintervalos crean N+1 puntos
         P = N + 1;
     }
-    *N_out = N; *h_out = h; *P_out = P;
+    
+    // Devolver valores calculados a través de punteros
+    *N_out = N;
+    *h_out = h;
+    *P_out = P;
 }
 
 int main() {
@@ -66,8 +113,14 @@ int main() {
     printf("y1(x0): "); scanf("%lf", &y10);
     printf("y2(x0): "); scanf("%lf", &y20);
 
-    printf("Modo discretizacion (1=N, 2=h): ");
-    if (scanf("%d", &modo) != 1) modo = 1;
+    printf("\n¿Cómo desea definir la discretización?\n");
+    printf("  1) Por cantidad de subintervalos (N)\n");
+    printf("  2) Por tamaño de paso (h)\n");
+    printf("Seleccione (1/2): ");
+    if (scanf("%d", &modo) != 1 || (modo != 1 && modo != 2)) {
+        printf("Opción inválida. Usando modo 1 (por N).\n");
+        modo = 1;
+    }
 
     if (modo == 1) {
         do {
@@ -88,6 +141,7 @@ int main() {
 
     printf("\nEjecutando métodos...\n");
     euler(modo, N, h, a, b, x0, y10, y20);
+    puntoMedio(modo, N, h, a, b, x0, y10, y20);
     rk4  (modo, N, h, a, b, x0, y10, y20);
     heun (modo, N, h, a, b, x0, y10, y20);
     return 0;
@@ -124,8 +178,59 @@ void euler(int modo, int N, double h, double a, double b, double x0, double y10,
     for (int i=0;i<P;++i)
         printf("%d\t%.8f\t%.8f\t%.8f\n", i, x[i], y1[i], y2[i]);
 
-    exportarDerivadas("euler_y1", x, y1, P);
-    exportarDerivadas("euler_y2", x, y2, P);
+    exportarTabla("euler_y1", x, y1, P);
+    exportarTabla("euler_y2", x, y2, P);
+
+    delete[] x; delete[] y1; delete[] y2;
+}
+
+// Punto Medio (Runge-Kutta de orden 2) acoplado
+void puntoMedio(int modo, int N, double h, double a, double b, double x0, double y10, double y20) {
+    const double eps = 1e-12;
+    int P;
+    calcularMallado(modo, N, h, a, b, &N, &h, &P);
+
+    if (fabs(x0 - a) > eps) { printf("[Punto Medio] x0!=a -> ajustado\n"); x0 = a; }
+
+    double *x = new double[P];
+    double *y1 = new double[P];
+    double *y2 = new double[P];
+
+    x[0]=x0; y1[0]=y10; y2[0]=y20;
+
+    for (int i=1; i<P; ++i) {
+        double xn  = x[i-1];
+        double y1n = y1[i-1];
+        double y2n = y2[i-1];
+
+        x[i] = xn + h;
+
+        // Punto medio: k1 = f(xn, y1n, y2n)
+        double k1_1 = f1(xn, y1n, y2n);
+        double k1_2 = f2(xn, y1n, y2n);
+
+        // Evaluación en el punto medio con pendiente k1
+        double xp  = xn + h/2.0;
+        double y1p = y1n + (h/2.0)*k1_1;
+        double y2p = y2n + (h/2.0)*k1_2;
+
+        // k2 = f(xn + h/2, y1n + (h/2)*k1_1, y2n + (h/2)*k1_2)
+        double k2_1 = f1(xp, y1p, y2p);
+        double k2_2 = f2(xp, y1p, y2p);
+
+        // Actualización: y[i] = y[i-1] + h * k2
+        y1[i] = y1n + h * k2_1;
+        y2[i] = y2n + h * k2_2;
+    }
+    if (modo==1) x[P-1]=b;
+
+    printf("[Punto Medio] modo=%d N=%d P=%d h=%.6f\n", modo, N, P, h);
+    printf("i\t x\t\t y1\t\t y2\n");
+    for (int i=0;i<P;++i)
+        printf("%d\t%.8f\t%.8f\t%.8f\n", i, x[i], y1[i], y2[i]);
+
+    exportarTabla("puntoMedio_y1", x, y1, P);
+    exportarTabla("puntoMedio_y2", x, y2, P);
 
     delete[] x; delete[] y1; delete[] y2;
 }
@@ -174,8 +279,8 @@ void rk4(int modo, int N, double h, double a, double b, double x0, double y10, d
     for (int i=0;i<P;++i)
         printf("%d\t%.8f\t%.8f\t%.8f\n", i, x[i], y1[i], y2[i]);
 
-    exportarDerivadas("rk4_y1", x, y1, P);
-    exportarDerivadas("rk4_y2", x, y2, P);
+    exportarTabla("rk4_y1", x, y1, P);
+    exportarTabla("rk4_y2", x, y2, P);
 
     delete[] x; delete[] y1; delete[] y2;
 }
@@ -216,8 +321,8 @@ void heun(int modo, int N, double h, double a, double b, double x0, double y10, 
     for (int i=0;i<P;++i)
         printf("%d\t%.8f\t%.8f\t%.8f\n", i, x[i], y1[i], y2[i]);
 
-    exportarDerivadas("heun_y1", x, y1, P);
-    exportarDerivadas("heun_y2", x, y2, P);
+    exportarTabla("heun_y1", x, y1, P);
+    exportarTabla("heun_y2", x, y2, P);
 
     delete[] x; delete[] y1; delete[] y2;
 }

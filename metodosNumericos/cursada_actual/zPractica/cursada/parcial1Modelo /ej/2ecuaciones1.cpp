@@ -124,8 +124,8 @@ void euler(int modo, int N, double h, double a, double b, double x0, double y10,
     for (int i=0;i<P;++i)
         printf("%d\t%.8f\t%.8f\t%.8f\n", i, x[i], y1[i], y2[i]);
 
-    exportarDerivadas("euler_y1", x, y1, P);
-    exportarDerivadas("euler_y2", x, y2, P);
+    exportarTabla("euler_y1", x, y1, P);
+    exportarTabla("euler_y2", x, y2, P);
 
     delete[] x; delete[] y1; delete[] y2;
 }
@@ -174,8 +174,8 @@ void rk4(int modo, int N, double h, double a, double b, double x0, double y10, d
     for (int i=0;i<P;++i)
         printf("%d\t%.8f\t%.8f\t%.8f\n", i, x[i], y1[i], y2[i]);
 
-    exportarDerivadas("rk4_y1", x, y1, P);
-    exportarDerivadas("rk4_y2", x, y2, P);
+    exportarTabla("rk4_y1", x, y1, P);
+    exportarTabla("rk4_y2", x, y2, P);
 
     delete[] x; delete[] y1; delete[] y2;
 }
@@ -216,8 +216,8 @@ void heun(int modo, int N, double h, double a, double b, double x0, double y10, 
     for (int i=0;i<P;++i)
         printf("%d\t%.8f\t%.8f\t%.8f\n", i, x[i], y1[i], y2[i]);
 
-    exportarDerivadas("heun_y1", x, y1, P);
-    exportarDerivadas("heun_y2", x, y2, P);
+    exportarTabla("heun_y1", x, y1, P);
+    exportarTabla("heun_y2", x, y2, P);
 
     delete[] x; delete[] y1; delete[] y2;
 }

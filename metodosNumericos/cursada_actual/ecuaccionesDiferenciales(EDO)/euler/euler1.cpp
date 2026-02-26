@@ -70,7 +70,7 @@ void euler(){
     }
 
     // Exportar resultados (se guardan en ./outputs/)
-    exportarDerivadas("euler_resultados", x, y, PUNTOS);
+    exportarTabla("euler_resultados", x, y, PUNTOS);
 }
 
 
