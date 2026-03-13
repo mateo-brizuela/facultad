@@ -1,0 +1,135 @@
+
+main.elf:     formato del fichero elf64-littleaarch64
+
+
+Desensamblado de la sección .text:
+
+0000000040080000 <end-0x20>:
+    40080000:	58000120 	ldr	x0, 40080024 <f>
+    40080004:	58000141 	ldr	x1, 4008002c <g>
+    40080008:	58000162 	ldr	x2, 40080034 <h>
+    4008000c:	58000183 	ldr	x3, 4008003c <i>
+    40080010:	580001a4 	ldr	x4, 40080044 <j>
+    40080014:	9b037c42 	mul	x2, x2, x3
+    40080018:	8b020021 	add	x1, x1, x2
+    4008001c:	cb040020 	sub	x0, x1, x4
+
+0000000040080020 <end>:
+    40080020:	14000000 	b	40080020 <end>
+
+Desensamblado de la sección .data:
+
+0000000040080024 <f>:
+    40080024:	00000001 	udf	#1
+    40080028:	00000000 	udf	#0
+
+000000004008002c <g>:
+    4008002c:	00000002 	udf	#2
+    40080030:	00000000 	udf	#0
+
+0000000040080034 <h>:
+    40080034:	00000003 	udf	#3
+    40080038:	00000000 	udf	#0
+
+000000004008003c <i>:
+    4008003c:	00000004 	udf	#4
+    40080040:	00000000 	udf	#0
+
+0000000040080044 <j>:
+    40080044:	00000005 	udf	#5
+    40080048:	00000000 	udf	#0
+
+Desensamblado de la sección .debug_line:
+
+0000000000000000 <.debug_line>:
+   0:	00000039 	udf	#57
+   4:	001a0002 	.inst	0x001a0002 ; undefined
+   8:	01040000 	.inst	0x01040000 ; undefined
+   c:	000a0efb 	.inst	0x000a0efb ; undefined
+  10:	01010101 	.inst	0x01010101 ; undefined
+  14:	01000000 	.inst	0x01000000 ; undefined
+  18:	69616d00 	ldpsw	x0, x27, [x8, #-248]
+  1c:	00732e6e 	.inst	0x00732e6e ; undefined
+  20:	00000000 	udf	#0
+  24:	00020900 	.inst	0x00020900 ; undefined
+  28:	00400800 	.inst	0x00400800 ; undefined
+  2c:	16000000 	b	fffffffff800002c <_stack_end+0xffffffffb7b8002c>
+  30:	1e1e1e1e 	.inst	0x1e1e1e1e ; undefined
+  34:	201e1e1f 	.inst	0x201e1e1f ; undefined
+  38:	01000102 	.inst	0x01000102 ; undefined
+  3c:	Address 0x3c is out of bounds.
+
+
+Desensamblado de la sección .debug_info:
+
+0000000000000000 <.debug_info>:
+   0:	0000002a 	udf	#42
+   4:	00000002 	udf	#2
+   8:	01080000 	.inst	0x01080000 ; undefined
+   c:	00000000 	udf	#0
+  10:	40080000 	.inst	0x40080000 ; undefined
+  14:	00000000 	udf	#0
+  18:	40080024 	.inst	0x40080024 ; undefined
+	...
+  24:	00000007 	udf	#7
+  28:	00000078 	udf	#120
+  2c:	Address 0x2c is out of bounds.
+
+
+Desensamblado de la sección .debug_abbrev:
+
+0000000000000000 <.debug_abbrev>:
+   0:	10001101 	adr	x1, 220 <end-0x4007fe00>
+   4:	12011106 	and	w6, w8, #0x8000000f
+   8:	1b0e0301 	madd	w1, w24, w14, w0
+   c:	130e250e 	sbfiz	w14, w8, #18, #10
+  10:	00000005 	udf	#5
+
+Desensamblado de la sección .debug_aranges:
+
+0000000000000000 <.debug_aranges>:
+   0:	0000002c 	udf	#44
+   4:	00000002 	udf	#2
+   8:	00080000 	.inst	0x00080000 ; undefined
+   c:	00000000 	udf	#0
+  10:	40080000 	.inst	0x40080000 ; undefined
+  14:	00000000 	udf	#0
+  18:	00000024 	udf	#36
+	...
+
+Desensamblado de la sección .debug_str:
+
+0000000000000000 <.debug_str>:
+   0:	6e69616d 	rsubhn2	v13.8h, v11.4s, v9.4s
+   4:	2f00732e 	.inst	0x2f00732e ; undefined
+   8:	656d6f68 	fnmls	z8.h, p3/m, z27.h, z13.h
+   c:	74616d2f 	.inst	0x74616d2f ; undefined
+  10:	622d6f65 	.inst	0x622d6f65 ; undefined
+  14:	757a6972 	.inst	0x757a6972 ; undefined
+  18:	2f616c65 	.inst	0x2f616c65 ; undefined
+  1c:	75636166 	.inst	0x75636166 ; undefined
+  20:	6461746c 	.inst	0x6461746c ; undefined
+  24:	7065722f 	adr	x15, cae6b <end-0x3ffb51b5>
+  28:	7469736f 	.inst	0x7469736f ; undefined
+  2c:	6f69726f 	fcmla	v15.8h, v19.8h, v9.h[1], #270
+  30:	69675f73 	ldpsw	x19, x23, [x27, #-200]
+  34:	62756874 	.inst	0x62756874 ; undefined
+  38:	6361662f 	.inst	0x6361662f ; undefined
+  3c:	61746c75 	.inst	0x61746c75 ; undefined
+  40:	65725f64 	fnmla	z4.h, p7/m, z27.h, z18.h
+  44:	662f6f70 	.inst	0x662f6f70 ; undefined
+  48:	6c756361 	ldnp	d1, d24, [x27, #-176]
+  4c:	2f646174 	umlsl	v20.4s, v11.4h, v4.h[2]
+  50:	75717261 	.inst	0x75717261 ; undefined
+  54:	63657469 	.inst	0x63657469 ; undefined
+  58:	61727574 	.inst	0x61727574 ; undefined
+  5c:	706d6f43 	adr	x3, dae47 <end-0x3ffa51d9>
+  60:	64617475 	.inst	0x64617475 ; undefined
+  64:	7361726f 	.inst	0x7361726f ; undefined
+  68:	65742f32 	fmls	z18.h, p3/m, z25.h, z20.h
+  6c:	616c706d 	.inst	0x616c706d ; undefined
+  70:	515f6574 	sub	w20, w11, #0x7d9, lsl #12
+  74:	00554d45 	.inst	0x00554d45 ; undefined
+  78:	20554e47 	.inst	0x20554e47 ; undefined
+  7c:	32205341 	orr	w1, w26, #0x1fffff
+  80:	0032342e 	.inst	0x0032342e ; NYI
