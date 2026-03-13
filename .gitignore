@@ -1,0 +1,12 @@
+# compilados ARM/QEMU
+*.o
+*.elf
+*.hex
+*.list
+*.img
+
+# debug
+.gdb_history
+
+# comprimidos
+*.zip
