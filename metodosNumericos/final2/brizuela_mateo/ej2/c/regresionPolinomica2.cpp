@@ -3,7 +3,7 @@
 #include <cmath>
 
 #define n 5 // cantidad de datos con los que vamos a trabajar 
-#define p 2 // IMPORTANTE: definir el grado del polinomio antes de ejecutar el programa 
+#define p 3 // grado del polinomio, en este caso es un polinomio de grado 2, por lo que p=3 (coeficientes a0, a1, a2) 
 
 // Función matemática para cálculo automático de y
 double funcionMatematica(double x) {

@@ -162,7 +162,7 @@ int main(int argc, char const *argv[])
 // Función g(x) para la iteración de punto fijo: x = g(x)
 // En este caso: g(x) = cos(sin(x))
 double calcularFuncion(double x){
-    return cos(sin(x));  // Ecuación: x = cos(sin(x))
+    return (2.5*sqrt(x) - 800.0) / (-0.5*log2(x));
 }
 
 // Cálculo numérico de la derivada g'(x) usando diferencia central

@@ -1,29 +1,29 @@
 #include <stdio.h>
 #include <cmath>
 
-#include "../../../../librerias/io/exportarResultados.h"
+#include "../librerias/io/exportarResultados.h"
 
 // y' = f(x,y)
 double f(double x, double y) {
     //return 2*x; // ejemplo
-    return -2.0*y + exp(-x);
+    return -10.0*y + 5*exp(-x);
 }
 
-void heun();
+void euler2();
 
 int main() {
-    heun();
+    euler2();
     return 0;
 }
 
-void heun() {
+void euler2() {
     // Entradas
     double a = 0.0, b = 0.0;
     double x0 = 0.0, y0 = 1.0;
     int modo = 1; // 1: definir N; 2: definir h
     const double eps = 1e-12;
 
-    printf("Metodo de Heun para EDO y' = f(x,y)\n");
+    printf("Metodo de Euler para EDO y' = f(x,y)\n");
     printf("Ingrese extremos del intervalo [a, b]\n");
     printf("a: "); scanf("%lf", &a);
     printf("b: "); scanf("%lf", &b);
@@ -77,7 +77,7 @@ void heun() {
         P = N + 1;
     }
 
-    // Alinear x0 con a (Heun explícito desde el extremo izquierdo)
+    // Alinear x0 con a (Euler explícito desde el extremo izquierdo)
     if (fabs(x0 - a) > eps) {
         printf("Aviso: x0 != a (%.6f != %.6f). Se ajusta x0 = a.\n", x0, a);
         x0 = a;
@@ -87,31 +87,25 @@ void heun() {
     double* x = new double[P];
     double* y = new double[P];
 
-    // Mallado y Heun explícito
+    // Mallado y Euler implicito
     x[0] = x0;   // = a
     y[0] = y0;
-    double k1 , k2, k3;
-    
-    //heum de tercer orden ACA ESTA EL CAMBIO 
     for (int i = 1; i < P; ++i) {
         x[i] = x[i - 1] + h;
-        k1 = f(x[i - 1], y[i - 1]);
-        k2 = f(x[i-1] + h/3.0, y[i - 1] + (h/3.0)*k1);
-        k3 = f(x[i-1] + (2.0*h)/3.0, y[i - 1] + (2.0*h/3.0)*k2);
-        y[i] = y[i - 1] + h*((k1/4.0) + (3.0*k3/4.0));
+        y[i] = (y[i-1] + 5.0*h*exp(-x[i])) / (1.0 + 10.0*h); // Euler implícito para esta f específica
     }
 
     // Si el modo es por N, garantizamos que el último punto sea exactamente b (como en el original)
     if (modo == 1) x[P - 1] = b;
 
     // Resultados
-    printf("\nResultados de la aproximacion por el metodo de Heun:\n");
+    printf("\nResultados de la aproximacion por el metodo de Euler:\n");
     printf("Modo = %s | N = %d | P = %d | h = %.12f\n",
            (modo == 2 ? "por h (sin ajustar a b, se corta al superar b)" : "por N"),
            N, P, h);
     printf("i\t        x_i\t\t        y_i\n");
     for (int i = 0; i < P; ++i) {
-        printf("%d\t%14.10f\t%14.10f\n", i, x[i], y[i]);
+        printf("%d\t%14.8f\t%14.10f\n", i, x[i], y[i]);
     }
 
     // Exportar (./outputs/)

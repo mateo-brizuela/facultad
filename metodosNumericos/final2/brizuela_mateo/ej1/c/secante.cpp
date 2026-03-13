@@ -6,7 +6,7 @@
 // (Cambiala si queres resolver otra ecuacion)
 double f(double x) {
     // Igual que (1/exp(x)) - x, pero mas claro y estable
-    return exp(-x) - x;
+    return 0.5*x*log2(x) + 2.5*sqrt(x) - 800.0;
 }
 
 int main(int argc, char const *argv[])

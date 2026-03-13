@@ -57,8 +57,6 @@ int main(int argc, char const *argv[])
         scanf("%lf", &a);
         printf("Ingrese el valor de b: ");
         scanf("%lf", &b);
-        printf("Ingrese la cantidad de cifras de precision: ");
-        scanf("%d", &cifrasPrecision);
     }
 
     // Criterio de corte
@@ -68,7 +66,17 @@ int main(int argc, char const *argv[])
     scanf("%d", &criterio);
 
     // Tolerancia
-    toleracia = pow(10, -cifrasPrecision);
+    if (criterio == 1)
+    {
+        printf("Ingrese la cantidad de cifras de precision: ");
+        scanf("%d", &cifrasPrecision);
+        toleracia = pow(10, -cifrasPrecision);
+        
+    }else{
+        printf("Ingrese el error porcentual maximo permitido (en %%): ");
+        scanf("%lf", &toleracia);
+    }
+    
 
     // Evaluaciones iniciales
     fa = calcularFuncion(a);
@@ -126,10 +134,16 @@ int main(int argc, char const *argv[])
             // Errores respecto de la iteración anterior
             eAbsoluto = fabs(c - cViejo);
 
-            if (criterio == 2)
+            // Calcular error relativo y porcentual si c != 0
+            if (c != 0.0)
             {
-                // Criterio porcentual: si c==0 no se puede calcular (cancelar)
-                if (c == 0.0)
+                eRelativo = fabs(c - cViejo) / fabs(c);
+                ePorcentual = eRelativo * 100.0;
+            }
+            else
+            {
+                // Si c == 0 y usamos criterio porcentual, no se puede continuar
+                if (criterio == 2)
                 {
                     printf("\n============================================\n");
                     printf("  ADVERTENCIA: DIVISION POR CERO EN ERROR %%\n");
@@ -138,24 +152,7 @@ int main(int argc, char const *argv[])
                     printf("============================================\n\n");
                     return 2;
                 }
-                else
-                {
-                    eRelativo = fabs(c - cViejo) / fabs(c);
-                    ePorcentual = eRelativo * 100.0;
-                }
-            }
-            else
-            {
-                // Criterio absoluto: calcular relativo si se puede (sin cancelar)
-                if (c != 0.0)
-                {
-                    eRelativo = fabs(c - cViejo) / fabs(c);
-                    ePorcentual = eRelativo * 100.0;
-                }
-                else
-                {
-                    // c==0 y no porcentual: el relativo sería indefinido, no lo usamos para cortar
-                }
+                // Si criterio absoluto, dejamos relativo/porcentual como estaban
             }
 
             // Actualizar cViejo
@@ -165,7 +162,7 @@ int main(int argc, char const *argv[])
         while (
             (
                 (criterio == 1 && (eAbsoluto > toleracia)) ||
-                (criterio == 2 && (ePorcentual > (toleracia * 100.0)))
+                (criterio == 2 && (ePorcentual > toleracia))
             )
             &&
             (i < MAX_ITER)
@@ -176,7 +173,7 @@ int main(int argc, char const *argv[])
             (i >= MAX_ITER) &&
             (
                 (criterio == 1 && (eAbsoluto > toleracia)) ||
-                (criterio == 2 && (ePorcentual > (toleracia * 100.0)))
+                (criterio == 2 && (ePorcentual > toleracia))
             )
            )
         {
@@ -214,6 +211,5 @@ int main(int argc, char const *argv[])
 double calcularFuncion(double x)
 {
     //return log(x) + 0.5*x - 5.0;
-    return log2(x) + 0.5*x - 5.0; // log2 es log base 2, para variar un poco la función. Raíz cerca de 16.
-            // si quiero un log con base distinta uso la funcion log(x)/log(base)
+    return  0.5*x*log2(x)+2.5*sqrt(x) - 800.0;
 }
